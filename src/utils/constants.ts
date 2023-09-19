@@ -46,5 +46,7 @@ const cars = [
     },
 ];
 
-export {cars}
+const dateIntervalError = 'Начальная дата должна быть раньше чем конечная'
+
+export {cars, dateIntervalError}
   

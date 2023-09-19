@@ -1,6 +1,6 @@
 import { ChangeEvent, useEffect, useState } from 'react';
 import './App.css';
-import { cars } from './utils/constants';
+import { cars, dateIntervalError } from './utils/constants';
 import type CarType from './utils/types';
 
 function App() {
@@ -70,7 +70,7 @@ function App() {
     const daysInterval = Math.floor(interval / (1000 * 3600 * 24));
     setDaysInterval(daysInterval);
     if (daysInterval < 0) {
-      setError('Начальная дата должна быть раньше чем конечная');
+      setError(dateIntervalError);
       return;
     } else {
       setError('');
