@@ -1,20 +1,21 @@
 import { ChangeEvent, useEffect, useState } from 'react';
 import './App.css';
-import { cars, dateIntervalError, formattedNowDate } from './utils/constants';
+import {
+  cars,
+  dateIntervalError,
+  formattedNowDate,
+  zeroDateIntervalMessage,
+} from './utils/constants';
 import type CarType from './utils/types';
 
 function App() {
   const [daysInterval, setDaysInterval] = useState(0);
   const [startDate, setStartDate] = useState(formattedNowDate);
   const [finishDate, setFinishDate] = useState(formattedNowDate);
-  const [error, setError] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
   const [rentCost, setRentCost] = useState(0);
   const [model, setModel] = useState(cars[0].model);
-  const [uniqueAutoClasses, setUniqueAutoClasses] = useState<string[]>([
-    'B',
-    'C',
-  ]);
-
+  const [uniqueAutoClasses, setUniqueAutoClasses] = useState<string[]>(['B']);
   const [filteredByClassCars, setFilteredByClassCars] =
     useState<CarType[]>(cars);
   const handleSelectClass = (e: ChangeEvent<HTMLSelectElement>) => {
@@ -54,16 +55,17 @@ function App() {
     const daysInterval = Math.floor(interval / (1000 * 3600 * 24));
     setDaysInterval(daysInterval);
     if (daysInterval < 0) {
-      setError(dateIntervalError);
-      setRentCost(0)
+      setErrorMessage(dateIntervalError);
+      setRentCost(0);
       return;
     } else {
-      setError('');
+      setErrorMessage('');
 
       const [selectedCar] = cars.filter((car) => car.model === model);
 
-      if (daysInterval <= 0) {
+      if (daysInterval === 0) {
         setRentCost(0);
+        setErrorMessage(zeroDateIntervalMessage);
         return;
       }
       if (daysInterval === 1) {
@@ -110,12 +112,20 @@ function App() {
             value={finishDate}
             onChange={handleFinishDate}
           ></input>
-          <p>{error}</p>
+          <p>{errorMessage}</p>
         </form>
 
-        <p>{model}</p>
-        <h2>{daysInterval}</h2>
-        <h2>{rentCost}</h2>
+        {errorMessage ? null : (
+          <p>{`стоимость аренды  ${model} c ${startDate
+            .split('-')
+            .reverse()
+            .join('-')} до ${finishDate
+            .split('-')
+            .reverse()
+            .join('-')} будет равна: ${
+            rentCost * daysInterval
+          } рублей`}</p>
+        )}
       </div>
     </>
   );
