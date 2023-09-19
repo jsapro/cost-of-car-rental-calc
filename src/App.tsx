@@ -5,18 +5,22 @@ import type CarType from './utils/types';
 
 function App() {
   const [daysInterval, setDaysInterval] = useState(0);
-
   const [startDate, setStartDate] = useState(formattedNowDate);
   const [finishDate, setFinishDate] = useState(formattedNowDate);
   const [error, setError] = useState('');
   const [rentCost, setRentCost] = useState(0);
-
   const [model, setModel] = useState(cars[0].model);
-  const classes = cars.map((car) => {
-    return car.class;
-  });
+  const [uniqueAutoClasses, setUniqueAutoClasses] = useState<string[]>([
+    'B',
+    'C',
+  ]);
 
-  const uniqueAutoClasses = Array.from(new Set(classes));
+  useEffect(() => {
+    const classes = cars.map((car) => {
+      return car.class;
+    });
+    setUniqueAutoClasses(Array.from(new Set(classes)));
+  }, []);
 
   const [filteredByClassCars, setFilteredByClassCars] =
     useState<CarType[]>(cars);
@@ -37,21 +41,11 @@ function App() {
   const handleStartDate = (e: ChangeEvent<HTMLInputElement>) => {
     const date = e.target.value;
     setStartDate(date);
-    // if (date > finishDate) {
-    //   setError('Начальная дата должна быть меньше чем конечная');
-    // } else {
-    //   setError('');
-    // }
   };
 
   const handleFinishDate = (e: ChangeEvent<HTMLInputElement>) => {
     const date = e.target.value;
     setFinishDate(date);
-    // if (date < startDate) {
-    //   setError('Начальная дата должна быть раньше чем конечная');
-    // } else {
-    //   setError('');
-    // }
   };
 
   useEffect(() => {
