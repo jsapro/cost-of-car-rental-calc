@@ -24,7 +24,7 @@ function App() {
     return car.class;
   });
 
-  const uniqueClasses = Array.from(new Set(classes));
+  const uniqueAutoClasses = Array.from(new Set(classes));
 
   const [filteredByClassCars, setFilteredByClassCars] =
     useState<CarType[]>(cars);
@@ -102,9 +102,9 @@ function App() {
     <>
       <div>
         <select onChange={handleSelectClass}>
-          {uniqueClasses.map((clas) => (
-            <option key={clas} value={clas}>
-              {clas}
+          {uniqueAutoClasses.map((autoClass) => (
+            <option key={autoClass} value={autoClass}>
+              {autoClass}
             </option>
           ))}
         </select>
