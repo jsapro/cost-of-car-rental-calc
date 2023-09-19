@@ -15,13 +15,6 @@ function App() {
     'C',
   ]);
 
-  useEffect(() => {
-    const classes = cars.map((car) => {
-      return car.class;
-    });
-    setUniqueAutoClasses(Array.from(new Set(classes)));
-  }, []);
-
   const [filteredByClassCars, setFilteredByClassCars] =
     useState<CarType[]>(cars);
   const handleSelectClass = (e: ChangeEvent<HTMLSelectElement>) => {
@@ -36,8 +29,6 @@ function App() {
     setModel(model);
   };
 
-  useEffect(() => {}, []);
-
   const handleStartDate = (e: ChangeEvent<HTMLInputElement>) => {
     const date = e.target.value;
     setStartDate(date);
@@ -49,6 +40,13 @@ function App() {
   };
 
   useEffect(() => {
+    const classes = cars.map((car) => {
+      return car.class;
+    });
+    setUniqueAutoClasses(Array.from(new Set(classes)));
+  }, []);
+
+  useEffect(() => {
     const date1 = new Date(startDate);
     const date2 = new Date(finishDate);
 
@@ -57,6 +55,7 @@ function App() {
     setDaysInterval(daysInterval);
     if (daysInterval < 0) {
       setError(dateIntervalError);
+      setRentCost(0)
       return;
     } else {
       setError('');
@@ -82,8 +81,6 @@ function App() {
     }
   }, [startDate, finishDate, model]);
 
-  const handleForm = () => {};
-
   return (
     <>
       <div>
@@ -101,7 +98,7 @@ function App() {
             </option>
           ))}
         </select>
-        <form onChange={handleForm}>
+        <form>
           <input
             type='date'
             value={startDate}
