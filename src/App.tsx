@@ -1,21 +1,13 @@
 import { ChangeEvent, useEffect, useState } from 'react';
 import './App.css';
-import { cars, dateIntervalError } from './utils/constants';
+import { cars, dateIntervalError, formattedNowDate } from './utils/constants';
 import type CarType from './utils/types';
 
 function App() {
   const [daysInterval, setDaysInterval] = useState(0);
 
-  const currentDate = new Date();
-
-  const year = currentDate.getFullYear();
-  const month = String(currentDate.getMonth() + 1).padStart(2, '0');
-  const day = String(currentDate.getDate()).padStart(2, '0');
-
-  const formattedDate = `${year}-${month}-${day}`;
-
-  const [startDate, setStartDate] = useState(formattedDate);
-  const [finishDate, setFinishDate] = useState(formattedDate);
+  const [startDate, setStartDate] = useState(formattedNowDate);
+  const [finishDate, setFinishDate] = useState(formattedNowDate);
   const [error, setError] = useState('');
   const [rentCost, setRentCost] = useState(0);
 
