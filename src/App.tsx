@@ -18,6 +18,7 @@ function App() {
   const [uniqueAutoClasses, setUniqueAutoClasses] = useState<string[]>(['B']);
   const [filteredByClassCars, setFilteredByClassCars] =
     useState<CarType[]>(cars);
+  
   const handleSelectClass = (e: ChangeEvent<HTMLSelectElement>) => {
     const selectedClass = e.target.value;
     const filteredCars = cars.filter((car) => car.class === selectedClass);
@@ -119,10 +120,10 @@ function App() {
           <p>{`стоимость аренды  ${model} c ${startDate
             .split('-')
             .reverse()
-            .join('-')} до ${finishDate
+            .join('.')} до ${finishDate
             .split('-')
             .reverse()
-            .join('-')} будет равна: ${
+            .join('.')} будет равна: ${
             rentCost * daysInterval
           } рублей`}</p>
         )}
