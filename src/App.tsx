@@ -15,12 +15,13 @@ function App() {
   const [errorMessage, setErrorMessage] = useState('');
   const [rentCost, setRentCost] = useState(0);
   const [model, setModel] = useState(cars[0].model);
-  const [uniqueAutoClasses, setUniqueAutoClasses] = useState<string[]>(['B']);
+  const [uniqueAutoClasses, setUniqueAutoClasses] = useState(['B']);
   const [filteredByClassCars, setFilteredByClassCars] = useState<CarType[]>(cars);
 
   const handleSelectClass = (e: ChangeEvent<HTMLSelectElement>) => {
     const selectedClass = e.target.value;
-    const filteredCars = cars.filter((car) => car.class === selectedClass);
+    // const filteredCars = cars.filter((car) => car.class === selectedClass);
+    const filteredCars = cars.filter(({ class }) => class === selectedClass);
     setFilteredByClassCars(filteredCars);
     setModel(filteredCars[0].model);
   };
