@@ -20,39 +20,37 @@ function App() {
 
   const handleSelectClass = (e: ChangeEvent<HTMLSelectElement>) => {
     const selectedClass = e.target.value;
-    // const filteredCars = cars.filter((car) => car.class === selectedClass);
-    const filteredCars = cars.filter(({ class }) => class === selectedClass);
+    const filteredCars = cars.filter((car) => car.class === selectedClass);
+    // const filteredCars = cars.filter(({ class }) => class === selectedClass);
     setFilteredByClassCars(filteredCars);
     setModel(filteredCars[0].model);
   };
 
   const handleSelectModel = (e: ChangeEvent<HTMLSelectElement>) => {
-    const model = e.target.value;
-    setModel(model);
+    setModel(e.target.value);
   };
 
   const handleStartDate = (e: ChangeEvent<HTMLInputElement>) => {
-    const date = e.target.value;
-    setStartDate(date);
+    setStartDate(e.target.value);
   };
 
   const handleFinishDate = (e: ChangeEvent<HTMLInputElement>) => {
-    const date = e.target.value;
-    setFinishDate(date);
+    setFinishDate(e.target.value);
   };
 
   useEffect(() => {
     const classes = cars.map((car) => {
       return car.class;
     });
+    // const classes = cars.map(({class}) => class);
     setUniqueAutoClasses(Array.from(new Set(classes)));
   }, []);
 
   useEffect(() => {
-    const date1 = new Date(startDate);
-    const date2 = new Date(finishDate);
+    const _startDate = new Date(startDate);
+    const  _finishDate = new Date(finishDate);
 
-    const interval = date2.getTime() - date1.getTime();
+    const interval =  _finishDate.getTime() - _startDate.getTime();
     const daysInterval = Math.floor(interval / (1000 * 3600 * 24));
     setDaysInterval(daysInterval);
     if (daysInterval < 0) {
