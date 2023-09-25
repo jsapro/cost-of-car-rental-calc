@@ -16,9 +16,8 @@ function App() {
   const [rentCost, setRentCost] = useState(0);
   const [model, setModel] = useState(cars[0].model);
   const [uniqueAutoClasses, setUniqueAutoClasses] = useState<string[]>(['B']);
-  const [filteredByClassCars, setFilteredByClassCars] =
-    useState<CarType[]>(cars);
-  
+  const [filteredByClassCars, setFilteredByClassCars] = useState<CarType[]>(cars);
+
   const handleSelectClass = (e: ChangeEvent<HTMLSelectElement>) => {
     const selectedClass = e.target.value;
     const filteredCars = cars.filter((car) => car.class === selectedClass);
@@ -86,48 +85,62 @@ function App() {
 
   return (
     <>
-      <div>
-        <select onChange={handleSelectClass}>
-          {uniqueAutoClasses.map((autoClass) => (
-            <option key={autoClass} value={autoClass}>
-              {autoClass}
-            </option>
-          ))}
-        </select>
-        <select onChange={handleSelectModel}>
-          {filteredByClassCars.map((car) => (
-            <option key={car.model} value={car.model}>
-              {car.model}
-            </option>
-          ))}
-        </select>
+      <section className="calc">
+        <h1>Расчет стоимости аренды автомобиля</h1>
+
+        <fieldset className="dropdown-wrapper">
+          <label htmlFor="classAuto" className="dropdown-title">
+            Класс авто
+          </label>
+          <select id="classAuto" className="dropdown-menu" onChange={handleSelectClass}>
+            {uniqueAutoClasses.map((autoClass) => (
+              <option key={autoClass} value={autoClass}>
+                {autoClass}
+              </option>
+            ))}
+          </select>
+        </fieldset>
+
+        <fieldset className="dropdown-wrapper">
+          <label htmlFor="model" className="dropdown-title">
+            Модель авто
+          </label>
+          <select id="model" className="dropdown-menu" onChange={handleSelectModel}>
+            {filteredByClassCars.map((car) => (
+              <option key={car.model} value={car.model}>
+                {car.model}
+              </option>
+            ))}
+          </select>
+        </fieldset>
+
         <form>
+          <p className="dropdown-title">Даты аренды</p>
           <input
-            type='date'
+            className="dropdown-menu"
+            type="date"
             value={startDate}
             onChange={handleStartDate}
           ></input>
           -
           <input
-            type='date'
+            className="dropdown-menu"
+            type="date"
             value={finishDate}
             onChange={handleFinishDate}
           ></input>
-          <p>{errorMessage}</p>
+          <p className="date-error">{errorMessage}</p>
         </form>
 
         {errorMessage ? null : (
-          <p>{`стоимость аренды  ${model} c ${startDate
+          <p className="result-text">{`стоимость аренды  ${model} c ${startDate
             .split('-')
             .reverse()
-            .join('.')} до ${finishDate
-            .split('-')
-            .reverse()
-            .join('.')} будет равна: ${
+            .join('.')} до ${finishDate.split('-').reverse().join('.')} будет равна: ${
             rentCost * daysInterval
           } рублей`}</p>
         )}
-      </div>
+      </section>
     </>
   );
 }
