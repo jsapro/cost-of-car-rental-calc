@@ -6,7 +6,7 @@ import {
   formattedNowDate,
   zeroDateIntervalMessage,
 } from './utils/constants';
-import type CarType from './utils/types';
+import { type CarType, daysIntervalEnum } from './utils/types';
 
 function App() {
   const [daysInterval, setDaysInterval] = useState(0);
@@ -67,25 +67,25 @@ function App() {
 
       const [selectedCar] = cars.filter((car) => car.model === model);
 
-      if (daysInterval === 0) {
+      if (daysInterval === daysIntervalEnum.zero) {
         setRentCost(0);
         setErrorMessage(zeroDateIntervalMessage);
         return;
       }
-      if (daysInterval === 1) {
+      if (daysInterval === daysIntervalEnum.one) {
         setRentCost(selectedCar.rentCostForDay.shortRent);
         return;
       }
-      if (daysInterval <= 5) {
+      if (daysInterval <= daysIntervalEnum.five) {
         setRentCost(selectedCar.rentCostForDay.averageRent);
         return;
       }
-      if (daysInterval >= 6) {
+      if (daysInterval >= daysIntervalEnum.six) {
         setRentCost(selectedCar.rentCostForDay.longRent);
         return;
       }
     }
-  }, [startDate, finishDate, model, findInterval]);
+  }, [model, findInterval]);
 
   return (
     <>
