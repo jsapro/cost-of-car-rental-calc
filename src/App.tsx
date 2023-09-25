@@ -1,4 +1,4 @@
-import { ChangeEvent, useEffect, useState } from 'react';
+import { ChangeEvent, useCallback, useEffect, useState } from 'react';
 import './App.css';
 import {
   cars,
@@ -46,12 +46,17 @@ function App() {
     setUniqueAutoClasses(Array.from(new Set(classes)));
   }, []);
 
-  useEffect(() => {
+  const findInterval = useCallback(() => {
     const _startDate = new Date(startDate);
-    const  _finishDate = new Date(finishDate);
+    const _finishDate = new Date(finishDate);
 
-    const interval =  _finishDate.getTime() - _startDate.getTime();
+    const interval = _finishDate.getTime() - _startDate.getTime();
     const daysInterval = Math.floor(interval / (1000 * 3600 * 24));
+    return daysInterval;
+  }, [finishDate, startDate]);
+
+  useEffect(() => {
+    const daysInterval = findInterval();
     setDaysInterval(daysInterval);
     if (daysInterval < 0) {
       setErrorMessage(dateIntervalError);
@@ -80,7 +85,7 @@ function App() {
         return;
       }
     }
-  }, [startDate, finishDate, model]);
+  }, [startDate, finishDate, model, findInterval]);
 
   return (
     <>
